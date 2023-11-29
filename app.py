@@ -7,7 +7,7 @@ import io
 app = Flask(__name__)
 
 # Load a known face encoding (replace with your known image)
-known_image_path = "image1.png"
+known_image_path = "image2.png"
 known_image = face_recognition.load_image_file(known_image_path)
 known_encoding = face_recognition.face_encodings(known_image)[0]
 
