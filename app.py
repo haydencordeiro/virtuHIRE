@@ -3,6 +3,14 @@ import face_recognition
 import numpy as np
 from PIL import Image, ImageOps
 import io
+from flask import Flask, request, jsonify, send_file
+from pymongo.mongo_client import MongoClient
+
+# MongoDB connection settings
+username = "acc_real_estate"
+database_name = "virtuhire"
+collection_name = "leaderboard"
+uri = "mongodb+srv://"+username+":U3RulWV4my1egCRp@cluster0.tdacs3z.mongodb.net/?retryWrites=true&w=majority"
 
 app = Flask(__name__)
 
@@ -91,6 +99,25 @@ def recognize_face():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/get_all_candidates', methods=['GET'])
+def get_all_candidates():
+    # Create a new client and connect to the server
+    client = MongoClient(uri)
+
+    # Connect to MongoDB
+    database = client[database_name]
+    collection = database[collection_name]
+
+    # Retrieve all documents from the collection
+    all_candidates = list(collection.find({}, {"_id": 0}).sort("score", -1))
+
+    # Close the MongoDB connection
+    client.close()
+
+    return jsonify({"candidates": all_candidates})
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -130,7 +130,7 @@ const VideoPlayerRealtime = () => {
           ref={videoRef}
           src={input_video}
           controls={false}
-          style={{ width: "80%", maxWidth: "800px" }}
+          style={{ width: "80%", maxWidth: "800px", maxHeight:"37rem" }}
           poster={poster}
           autoPlay
           muted={muted}
