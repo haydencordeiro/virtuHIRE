@@ -61,6 +61,7 @@ const VideoPlayerRealtime = () => {
   };
 
   const startSpeechRecognition = () => {
+    console.log("ASDF")
     recognition.start();
     setIsRecording(true);
   };
@@ -83,6 +84,7 @@ const VideoPlayerRealtime = () => {
   const handleSendClick = async () => {
     setMuted("");
     setLoading(true);
+    stopSpeechRecognition()
     const inputText = inputRef.current.value;
 
     try {
@@ -107,7 +109,7 @@ const VideoPlayerRealtime = () => {
     }
   };
 
-  const debouncedHandleSendClick = debounce(handleSendClick, 1000); // Adjust the debounce delay as needed
+  const debouncedHandleSendClick = debounce(handleSendClick, 2000); // Adjust the debounce delay as needed
 
   const handleStartInterview = () =>{
     setVideoFaceDectectionStarted(true)
@@ -151,8 +153,8 @@ const VideoPlayerRealtime = () => {
           component="label"
           variant="contained"
           startIcon={isRecording ? <StopCircleIcon />  :<MicIcon />}
-          onMouseDown={startSpeechRecognition}
-          onMouseUp={stopSpeechRecognition}
+          onClick={isRecording ? stopSpeechRecognition: startSpeechRecognition}
+          // onMouseUp={stopSpeechRecognition}
           disabled = {!videoFaceDectectionStarted}
         >
           Mic
